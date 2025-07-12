@@ -123,6 +123,8 @@ export default function ImageUploader({ onImageUpload, isLoading }: ImageUploade
     setFacingMode(prev => prev === 'environment' ? 'user' : 'environment');
   }
 
+  const triggerFileSelect = () => fileInputRef.current?.click();
+
   return (
     <>
       <Card className="w-full">
@@ -137,10 +139,11 @@ export default function ImageUploader({ onImageUpload, isLoading }: ImageUploade
             onDragOver={(e) => e.preventDefault()}
             onDragLeave={onDragLeave}
             onDrop={onDrop}
+            onClick={triggerFileSelect}
           >
-            <ImageUp className="h-12 w-12 text-muted-foreground mb-4" />
+            <ImageUp className="h-12 w-12 text-muted-foreground mb-4 cursor-pointer" />
             <p className="text-center text-muted-foreground">
-              <span className="font-semibold text-primary cursor-pointer hover:underline" onClick={() => fileInputRef.current?.click()}>Click to upload</span> or drag and drop
+              <span className="font-semibold text-primary cursor-pointer hover:underline">Click to upload</span> or drag and drop
             </p>
             <p className="text-xs text-muted-foreground mt-1">PNG, JPG, or WEBP</p>
             <Input
