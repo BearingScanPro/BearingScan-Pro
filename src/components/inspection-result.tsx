@@ -4,7 +4,7 @@ import Image from 'next/image';
 import type { InspectionResult } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, XCircle, FileText } from 'lucide-react';
+import { CheckCircle2, XCircle, FileText, AlertTriangle } from 'lucide-react';
 
 interface InspectionResultDisplayProps {
   inspection: InspectionResult;
@@ -12,14 +12,27 @@ interface InspectionResultDisplayProps {
 
 export default function InspectionResultDisplay({ inspection }: InspectionResultDisplayProps) {
   const isDefective = inspection.result === 'Defective';
+  const isNormal = inspection.result === 'Normal';
+  const isNotBearing = inspection.result === 'Not a bearing';
+
+  const getBadgeVariant = () => {
+    if (isDefective || isNotBearing) return 'destructive';
+    return 'default';
+  }
+
+  const getBadgeIcon = () => {
+    if(isNotBearing) return <AlertTriangle className="mr-2 h-4 w-4" />;
+    if(isDefective) return <XCircle className="mr-2 h-4 w-4" />;
+    return <CheckCircle2 className="mr-2 h-4 w-4" />;
+  }
 
   return (
     <Card className="w-full overflow-hidden">
       <CardHeader>
         <CardTitle className="font-headline flex items-center justify-between">
           <span>Inspection Result</span>
-          <Badge variant={isDefective ? 'destructive' : 'default'} className="text-base">
-            {isDefective ? <XCircle className="mr-2 h-4 w-4" /> : <CheckCircle2 className="mr-2 h-4 w-4" />}
+          <Badge variant={getBadgeVariant()} className="text-base">
+            {getBadgeIcon()}
             {inspection.result}
           </Badge>
         </CardTitle>
@@ -67,6 +80,20 @@ export default function InspectionResultDisplay({ inspection }: InspectionResult
             <CardContent>
               <p className="text-sm text-foreground/80">
                 {inspection.description}
+              </p>
+            </CardContent>
+          </Card>
+        )}
+
+        {isNotBearing && (
+           <Card className="bg-destructive/10 border-destructive">
+            <CardHeader className="flex flex-row items-center space-x-2 space-y-0 pb-2">
+                <AlertTriangle className="h-5 w-5 text-destructive"/>
+                <CardTitle className="text-base font-headline text-destructive">Object Not Recognized</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-destructive/80">
+                The uploaded image was not identified as an industrial bearing. Please upload a clear image of a bearing for analysis.
               </p>
             </CardContent>
           </Card>

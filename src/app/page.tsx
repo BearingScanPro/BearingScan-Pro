@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { generateAnomaliesDescription } from '@/ai/flows/generate-anomalies-description';
+import { inspectBearing } from '@/ai/flows/inspect-bearing';
 import type { InspectionResult } from '@/types';
 import Header from '@/components/header';
 import ImageUploader from '@/components/image-uploader';
@@ -24,46 +24,21 @@ export default function Home() {
     reader.onload = async () => {
       try {
         const imageUri = reader.result as string;
-
-        // Mock detection logic
-        const isDefective = Math.random() > 0.3; // 70% chance of being defective
         const timestamp = new Date().toISOString();
-        let inspection: InspectionResult;
 
-        if (isDefective) {
-          const defectTypes = ['Tear', 'Misprint', 'Seal Issue', 'Contamination'];
-          const defectType = defectTypes[Math.floor(Math.random() * defectTypes.length)];
-          const confidenceScore = Math.random() * (0.99 - 0.8) + 0.8; // Confidence between 80% and 99%
-          
-          const boundingBox = {
-            x: Math.random() * 50, // x between 0-50%
-            y: Math.random() * 50, // y between 0-50%
-            width: Math.random() * (50 - 20) + 20, // width between 20-50%
-            height: Math.random() * (50 - 20) + 20, // height between 20-50%
-          };
-          
-          const aiResponse = await generateAnomaliesDescription({ imageUri, defectType, confidenceScore });
+        const aiResponse = await inspectBearing({ imageUri });
 
-          inspection = {
-            id: `ins_${Date.now()}`,
-            image: imageUri,
-            result: 'Defective',
-            defectType,
-            confidence: confidenceScore,
-            boundingBox,
-            description: aiResponse.description,
-            timestamp,
-          };
-        } else {
-          inspection = {
-            id: `ins_${Date.now()}`,
-            image: imageUri,
-            result: 'Normal',
-            confidence: Math.random() * (0.99 - 0.9) + 0.9,
-            timestamp,
-          };
-        }
-
+        const inspection: InspectionResult = {
+          id: `ins_${Date.now()}`,
+          image: imageUri,
+          result: aiResponse.result,
+          defectType: aiResponse.defectType,
+          confidence: aiResponse.confidence,
+          boundingBox: aiResponse.boundingBox,
+          description: aiResponse.description,
+          timestamp,
+        };
+        
         setCurrentInspection(inspection);
         setInspectionHistory(prev => [inspection, ...prev]);
 

@@ -8,7 +8,7 @@ export interface BoundingBox {
 export type InspectionResult = {
   id: string;
   image: string; // base64 data URI
-  result: 'Normal' | 'Defective';
+  result: 'Normal' | 'Defective' | 'Not a bearing';
   defectType?: string;
   confidence?: number;
   boundingBox?: BoundingBox;
