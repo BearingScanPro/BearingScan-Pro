@@ -134,16 +134,16 @@ export default function ImageUploader({ onImageUpload, isLoading }: ImageUploade
         </CardHeader>
         <CardContent className="space-y-4">
           <div
-            className={`flex flex-col items-center justify-center p-8 border-2 border-dashed rounded-lg transition-colors duration-200 ${isDragging ? 'border-primary bg-accent/20' : 'border-border hover:border-primary/50'}`}
+            className={`flex flex-col items-center justify-center p-8 border-2 border-dashed rounded-lg transition-colors duration-200 cursor-pointer ${isDragging ? 'border-primary bg-accent/20' : 'border-border hover:border-primary/50'}`}
             onDragEnter={onDragEnter}
             onDragOver={(e) => e.preventDefault()}
             onDragLeave={onDragLeave}
             onDrop={onDrop}
             onClick={triggerFileSelect}
           >
-            <ImageUp className="h-12 w-12 text-muted-foreground mb-4 cursor-pointer" />
+            <ImageUp className="h-12 w-12 text-muted-foreground mb-4" />
             <p className="text-center text-muted-foreground">
-              <span className="font-semibold text-primary cursor-pointer hover:underline">Click to upload</span> or drag and drop
+              <span className="font-semibold text-primary hover:underline">Click to upload</span> or drag and drop
             </p>
             <p className="text-xs text-muted-foreground mt-1">PNG, JPG, or WEBP</p>
             <Input
