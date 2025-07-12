@@ -39,17 +39,17 @@ export default function DetectionLog({ history }: DetectionLogProps) {
           <Table>
             <TableHeader className="sticky top-0 bg-muted/95 backdrop-blur-sm z-10">
               <TableRow>
-                <TableHead className="w-[80px]">Image</TableHead>
-                <TableHead>Result</TableHead>
-                <TableHead>Confidence</TableHead>
-                <TableHead>Timestamp</TableHead>
-                <TableHead className="text-right">Defect Type</TableHead>
+                <TableHead className="w-[10%]">Image</TableHead>
+                <TableHead className="w-[20%]">Result</TableHead>
+                <TableHead className="w-[20%]">Confidence</TableHead>
+                <TableHead className="w-[30%]">Timestamp</TableHead>
+                <TableHead className="w-[20%] text-right">Defect Type</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {history.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
+                  <TableCell colSpan={5} className="h-16 text-center text-muted-foreground">
                     No inspections yet.
                   </TableCell>
                 </TableRow>
