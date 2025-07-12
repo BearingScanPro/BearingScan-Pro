@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState, type DragEvent, useEffect } from 'react';
-import { Camera, ImageUp, Loader2, CircleDot } from 'lucide-react';
+import { Camera, ImageUp, Loader2, CircleDot, SwitchCamera } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -26,16 +26,18 @@ export default function ImageUploader({ onImageUpload, isLoading }: ImageUploade
   const [isDragging, setIsDragging] = useState(false);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
+  const [facingMode, setFacingMode] = useState<'environment' | 'user'>('environment');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { toast } = useToast();
 
   useEffect(() => {
+    let stream: MediaStream | null = null;
     if (isCameraOpen) {
       const getCameraPermission = async () => {
         try {
-          const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+          stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: facingMode } });
           setHasCameraPermission(true);
           if (videoRef.current) {
             videoRef.current.srcObject = stream;
@@ -51,15 +53,17 @@ export default function ImageUploader({ onImageUpload, isLoading }: ImageUploade
         }
       };
       getCameraPermission();
-    } else {
-      // Stop camera stream when dialog is closed
+    }
+    
+    return () => {
+      // Stop camera stream when dialog is closed or component unmounts
       if (videoRef.current && videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject as MediaStream;
-        stream.getTracks().forEach(track => track.stop());
+        const mediaStream = videoRef.current.srcObject as MediaStream;
+        mediaStream.getTracks().forEach(track => track.stop());
         videoRef.current.srcObject = null;
       }
-    }
-  }, [isCameraOpen, toast]);
+    };
+  }, [isCameraOpen, facingMode, toast]);
 
   const handleFileSelect = (fileList: FileList | null) => {
     if (fileList && fileList.length > 0) {
@@ -114,6 +118,10 @@ export default function ImageUploader({ onImageUpload, isLoading }: ImageUploade
     setIsDragging(false);
     handleFileSelect(e.dataTransfer.files);
   };
+
+  const handleCameraSwitch = () => {
+    setFacingMode(prev => prev === 'environment' ? 'user' : 'environment');
+  }
 
   return (
     <>
@@ -187,6 +195,15 @@ export default function ImageUploader({ onImageUpload, isLoading }: ImageUploade
                 }}
               />
             </div>
+             <Button
+                variant="outline"
+                size="icon"
+                onClick={handleCameraSwitch}
+                className="absolute bottom-4 right-4 rounded-full bg-black/50 hover:bg-black/70 border-white/50 text-white"
+                disabled={!hasCameraPermission}
+              >
+                <SwitchCamera className="h-5 w-5" />
+              </Button>
             {hasCameraPermission === false && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/80">
                 <Alert variant="destructive" className="m-4">
