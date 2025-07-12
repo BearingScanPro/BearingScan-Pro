@@ -19,8 +19,9 @@ export default function ProfileMenu() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10">
-            <AvatarImage data-ai-hint="user avatar" src="https://placehold.co/100x100.png" alt="User avatar" />
-            <AvatarFallback>U</AvatarFallback>
+            <AvatarFallback>
+              <User />
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
