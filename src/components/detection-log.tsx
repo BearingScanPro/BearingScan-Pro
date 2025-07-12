@@ -50,7 +50,7 @@ export default function DetectionLog({ history }: DetectionLogProps) {
               {history.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
-                    No inspections yet. Start by uploading an image.
+                    No inspections yet.
                   </TableCell>
                 </TableRow>
               ) : (
