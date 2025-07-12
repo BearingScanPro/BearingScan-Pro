@@ -28,7 +28,7 @@ export default function InspectionResultDisplay({ inspection }: InspectionResult
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div data-ai-hint="product packaging" className="relative w-full aspect-video rounded-md overflow-hidden border border-border bg-muted/30">
+        <div data-ai-hint="product packaging" className="relative w-full aspect-[9/16] rounded-md overflow-hidden border border-border bg-muted/30">
           <Image src={inspection.image} alt="Inspected product" layout="fill" objectFit="contain" />
           {isDefective && inspection.boundingBox && (
             <div
@@ -47,11 +47,11 @@ export default function InspectionResultDisplay({ inspection }: InspectionResult
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="bg-muted/50 p-3 rounded-md">
               <p className="font-semibold text-muted-foreground">Defect Type</p>
-              <p className="font-bold text-foreground text-lg">{inspection.defectType}</p>
+              <p className="font-bold text-foreground text-base">{inspection.defectType}</p>
             </div>
             <div className="bg-muted/50 p-3 rounded-md">
               <p className="font-semibold text-muted-foreground">Confidence</p>
-              <p className="font-bold text-foreground text-lg">
+              <p className="font-bold text-foreground text-base">
                 {inspection.confidence && (inspection.confidence * 100).toFixed(1)}%
               </p>
             </div>

@@ -92,19 +92,18 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
-      <main className="flex-grow container mx-auto p-4 md:p-8 space-y-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          <ImageUploader onImageUpload={handleImageUpload} isLoading={isLoading} />
-          <div className="space-y-8">
-            {isLoading && (
-              <div className="flex items-center justify-center p-10 h-full min-h-[300px] rounded-lg border-2 border-dashed border-border bg-card">
-                <Loader2 className="h-16 w-16 animate-spin text-primary" />
-                <p className="ml-4 text-lg text-muted-foreground font-semibold">Analyzing Image...</p>
-              </div>
-            )}
-            {currentInspection && <InspectionResultDisplay inspection={currentInspection} />}
+      <main className="flex-grow container mx-auto p-4 space-y-6">
+        <ImageUploader onImageUpload={handleImageUpload} isLoading={isLoading} />
+        
+        {isLoading && (
+          <div className="flex flex-col items-center justify-center p-10 h-full min-h-[300px] rounded-lg border-2 border-dashed border-border bg-card">
+            <Loader2 className="h-12 w-12 animate-spin text-primary" />
+            <p className="mt-4 text-base text-muted-foreground font-semibold">Analyzing Image...</p>
           </div>
-        </div>
+        )}
+        
+        {currentInspection && <InspectionResultDisplay inspection={currentInspection} />}
+        
         <DetectionLog history={inspectionHistory} />
       </main>
     </div>
