@@ -1,4 +1,4 @@
-# Firebase Studio
+# BearingScan Pro
 
 This is a NextJS starter in Firebase Studio.
 
