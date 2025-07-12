@@ -27,23 +27,23 @@ interface DetectionLogProps {
 
 export default function DetectionLog({ history }: DetectionLogProps) {
   return (
-    <Card>
+    <Card className="flex flex-col">
       <CardHeader>
         <CardTitle className="font-headline">Detection Log</CardTitle>
         <CardDescription>
           A history of all your recent inspections.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <ScrollArea className="h-[400px] w-full rounded-md border">
+      <CardContent className="flex-grow overflow-hidden">
+        <ScrollArea className="h-full w-full rounded-md border">
           <Table>
             <TableHeader className="sticky top-0 bg-muted/95 backdrop-blur-sm z-10">
               <TableRow>
-                <TableHead className="w-[10%]">Image</TableHead>
-                <TableHead className="w-[20%]">Result</TableHead>
-                <TableHead className="w-[20%]">Confidence</TableHead>
-                <TableHead className="w-[30%]">Timestamp</TableHead>
-                <TableHead className="w-[20%] text-right">Defect Type</TableHead>
+                <TableHead className="w-[60px]">Image</TableHead>
+                <TableHead className="w-[120px]">Result</TableHead>
+                <TableHead className="w-[120px]">Confidence</TableHead>
+                <TableHead className="w-[180px]">Timestamp</TableHead>
+                <TableHead className="w-[120px] text-right">Defect Type</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

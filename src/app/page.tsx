@@ -92,7 +92,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
-      <main className="flex-grow container mx-auto p-4 space-y-6">
+      <main className="flex-grow container mx-auto p-4 flex flex-col space-y-6">
         <ImageUploader onImageUpload={handleImageUpload} isLoading={isLoading} />
         
         {isLoading && (
@@ -104,7 +104,9 @@ export default function Home() {
         
         {currentInspection && <InspectionResultDisplay inspection={currentInspection} />}
         
-        <DetectionLog history={inspectionHistory} />
+        <div className="flex-grow min-h-[400px]">
+          <DetectionLog history={inspectionHistory} />
+        </div>
       </main>
     </div>
   );
