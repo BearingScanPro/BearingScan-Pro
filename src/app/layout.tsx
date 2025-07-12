@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'InspectAI',
-  description: 'AI-powered visual anomaly detection for packaging lines.',
+  title: 'BearingScan Pro',
+  description: 'AI-powered visual anomaly detection for industrial bearings.',
 };
 
 export default function RootLayout({
